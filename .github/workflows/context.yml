@@ -1,0 +1,37 @@
+name: Context Workflow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  APP_ENV: development
+
+jobs:
+  context-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print context objects
+        run: |
+          echo "Actor: ${{ github.actor }}"
+          echo "Event: ${{ github.event_name }}"
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Env: ${{ env.APP_ENV }}"
+
+      - name: Conditional with contains
+        if: contains(github.actor, 'Hamzah')
+        run: echo "Actor name contains Hamzah"
+
+      - name: Runs on success
+        if: success()
+        run: echo "Previous steps succeeded"
+
+      - name: Runs always
+        if: always()
+        run: echo "This step always runs"
+
+      - name: Runs on failure
+        if: failure()
+        run: echo "This step runs only on failure"
