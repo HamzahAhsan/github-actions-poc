@@ -1,0 +1,15 @@
+﻿name: Module 2D - Repository Dispatch
+
+on:
+  repository_dispatch:
+    types: [custom-webhook]
+
+jobs:
+  webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show payload
+        run: |
+          echo "Event: ${{ github.event_name }}"
+          echo "Action type: ${{ github.event.action }}"
+          echo "Message: ${{ github.event.client_payload.message }}"
