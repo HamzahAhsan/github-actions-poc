@@ -1,0 +1,15 @@
+name: Self-Hosted Runner Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  self-hosted-job:
+    runs-on: [self-hosted, my-runner]
+    steps:
+      - name: Show runner details
+        shell: powershell
+        run: |
+          Write-Host "Runner name: $env:RUNNER_NAME"
+          Write-Host "Runner OS: $env:RUNNER_OS"
+          Write-Host "Computer name: $env:COMPUTERNAME"
