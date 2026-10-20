@@ -1,0 +1,40 @@
+name: Multi-OS Workflow
+
+on:
+  push:
+    paths:
+      - '.github/workflows/multi-os.yml'
+  workflow_dispatch:
+
+jobs:
+  ubuntu-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show Ubuntu version
+        run: |
+          echo "Runner OS: ${{ runner.os }}"
+          cat /etc/os-release | head -2
+
+  windows-job:
+    runs-on: windows-latest
+    steps:
+      - name: Show Windows version
+        shell: powershell
+        run: |
+          Write-Host "Runner OS: ${{ runner.os }}"
+          (Get-CimInstance Win32_OperatingSystem).Caption
+      - name: Install package with Chocolatey
+        run: choco install jq -y
+
+  macos-job:
+    runs-on: macos-latest
+    steps:
+      - name: Show macOS version
+        run: |
+          echo "Runner OS: ${{ runner.os }}"
+          sw_vers
+      - name: Compile Swift
+        run: |
+          echo 'print("Hello from Swift on macOS")' > hello.swift
+          swiftc hello.swift -o hello
+          ./hello
