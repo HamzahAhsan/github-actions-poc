@@ -12,11 +12,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js with caching
-        uses: actions/setup-node@v4
+      - name: Cache sample directory
+        uses: actions/cache@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-build-
 
-      - name: Test Cache Execution
-        run: echo "Dependency caching completed"
+      - name: Run sample step
+        run: echo "Dependency caching step executed successfully"
