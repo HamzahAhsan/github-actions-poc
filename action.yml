@@ -1,0 +1,12 @@
+name: 'Hello World Custom Action'
+description: 'A composite custom action for Module 7'
+inputs:
+  who-to-greet:
+    description: 'Who to greet'
+    required: true
+    default: 'Hamzah Ahsan'
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: echo "Hello ${{ inputs.who-to-greet }} from Custom Action!"
